@@ -1,10 +1,7 @@
 package com.mycompany.a2.game.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.codename1.charts.models.Point;
-import com.mycompany.a2.game.model.*;
+import com.mycompany.a2.collection.IIterator;
 import com.mycompany.a2.util.Util;
 
 /**
@@ -21,7 +18,7 @@ public class GameWorld
 	private boolean exitRequested = false;
 	private Clock clock = new Clock();
 	private int antLives = ANT_STARTING_LIVES;
-	private List<GameObject> gameObjects;
+	private GameObjectCollection gameObjects;
 	private Ant ant;
 	
 	/**
@@ -41,7 +38,7 @@ public class GameWorld
 	public void init()
 	{
 		ant = Ant.getInstance();
-		gameObjects = new ArrayList<>();
+		gameObjects = new GameObjectCollection();
 		gameObjects.add(ant);
 		gameObjects.add(new Flag(1, Util.CENTER_SCREEN));
 		gameObjects.add(new Flag(2, new Point(350, 25)));
@@ -128,13 +125,18 @@ public class GameWorld
 	 */
 	public void antHitFoodStation()
 	{
-		for (GameObject obj : gameObjects)
+		IIterator<GameObject> it = gameObjects.getIterator();
+
+		while (it.hasNext())
 		{
-			if (obj instanceof FoodStation)
+			GameObject obj = it.getNext();
+
+			if (obj instanceof FoodStation && ((FoodStation) obj).getCapacity() > 0)
 			{
 				ant.setFood(ant.getFood() + ((FoodStation) obj).getCapacity());
-				
-				obj = new FoodStation();
+				((FoodStation) obj).setCapacity(0);
+				gameObjects.add(new FoodStation());
+				return;
 			}
 		}
 	}
@@ -213,9 +215,13 @@ public class GameWorld
 			
 			antDies();
 		}
-		
-		for (GameObject obj : gameObjects)
+
+		IIterator<GameObject> it = gameObjects.getIterator();
+
+		while (it.hasNext())
 		{
+			GameObject obj = it.getNext();
+
 			if (obj instanceof Movable)
 			{
 				((Movable) obj).move();
@@ -272,8 +278,12 @@ public class GameWorld
 	 */
 	public void showMap()
 	{
-		for (GameObject obj : gameObjects)
+		IIterator<GameObject> it = gameObjects.getIterator();
+
+		while (it.hasNext())
 		{
+			GameObject obj = it.getNext();
+
 			System.out.println(obj);
 		}
 	}
