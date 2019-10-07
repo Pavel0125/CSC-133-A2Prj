@@ -1,6 +1,7 @@
 package com.mycompany.a2.game.model;
 
 import com.codename1.charts.models.Point;
+import com.mycompany.a2.util.Util;
 
 public final class Ant extends Movable implements ISteerable
 {
@@ -20,8 +21,10 @@ public final class Ant extends Movable implements ISteerable
 	private int healthLevel = STARTING_HEALTH;
 	private int lastFlagReached;
 	private int speedLimit;
-	
-	public Ant(Point location)
+
+	private static Ant instance = new Ant(Util.CENTER_SCREEN);
+
+	private Ant(Point location)
 	{
 		setLocation(location);
 		computeSpeedLimit();
@@ -60,7 +63,15 @@ public final class Ant extends Movable implements ISteerable
 		
 		speedLimit = Math.min(speedLimit, maxSpeed);
 	}
-	
+
+	/**
+	 * @return The instance of Ant (Ant is a singleton)
+	 */
+	public static Ant getInstance()
+	{
+		return instance;
+	}
+
 	/**
 	 * Reduce food according to the food consumption rate. Food will not reduce below 0.
 	 */

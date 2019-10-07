@@ -40,7 +40,7 @@ public class GameWorld
 	 */
 	public void init()
 	{
-		ant = new Ant(Util.CENTER_SCREEN);
+		ant = Ant.getInstance();
 		gameObjects = new ArrayList<>();
 		gameObjects.add(ant);
 		gameObjects.add(new Flag(1, Util.CENTER_SCREEN));
