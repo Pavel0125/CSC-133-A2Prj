@@ -42,7 +42,7 @@ public final class FoodStation extends Fixed
 	 */
 	public void setCapacity(int capacity)
 	{
-		this.capacity = capacity < 0 ? 0 : capacity;
+		this.capacity = Math.max(capacity, 0);
 	}
 	
 	/**

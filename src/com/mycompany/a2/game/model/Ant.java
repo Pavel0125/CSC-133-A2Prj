@@ -58,7 +58,7 @@ public final class Ant extends Movable implements ISteerable
 		
 		speedLimit = Math.round(speedLimitModifier * maxSpeed);
 		
-		speedLimit = (speedLimit < maxSpeed) ? speedLimit : maxSpeed;
+		speedLimit = Math.min(speedLimit, maxSpeed);
 	}
 	
 	/**
@@ -68,7 +68,7 @@ public final class Ant extends Movable implements ISteerable
 	{
 		foodLevel -= foodConsumptionRate;
 		
-		foodLevel = foodLevel < 0 ? 0 : foodLevel;
+		foodLevel = Math.max(foodLevel, 0);
 	}
 
 	/**
@@ -119,7 +119,7 @@ public final class Ant extends Movable implements ISteerable
 	 */
 	public void setFood(int food)
 	{
-		this.foodLevel = food < 0 ? 0 : food;
+		this.foodLevel = Math.max(food, 0);
 	}
 	
 	/**
@@ -137,7 +137,7 @@ public final class Ant extends Movable implements ISteerable
 	 */
 	public void setHealth(int health)
 	{
-		this.healthLevel = health < 0 ? 0 : health;
+		this.healthLevel = Math.max(health, 0);
 		
 		computeSpeedLimit();
 		computeSpeed();
@@ -153,9 +153,9 @@ public final class Ant extends Movable implements ISteerable
 	@Override
 	public void setSpeed(int speed)
 	{
-		speed = (speed < 0) ? 0 : speed;
+		speed = Math.max(speed, 0);
 		
-		this.speed = (speed < speedLimit) ? speed : speedLimit;
+		this.speed = Math.min(speed, speedLimit);
 	}
 	
 	/**

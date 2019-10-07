@@ -30,8 +30,8 @@ public final class Util
 	 */
 	public static final float clampToRange(float num, float min, float max)
 	{
-		num = num < min ? min : num;
-		return num > max ? max : num;
+		num = Math.max(num, min);
+		return Math.min(num, max);
 	}
 	
 	/**
@@ -40,7 +40,7 @@ public final class Util
 	 * @param point The point to clamp to on-screen coordinates
 	 * @return `point`, or a modified version of `point` that lies on screen
 	 */
-	public static final Point clampToScreen(Point point)
+	public static Point clampToScreen(Point point)
 	{
 		float x = Util.clampToRange(point.getX(), MIN_X, MAX_X);
 		float y = Util.clampToRange(point.getY(), MIN_Y, MAX_Y);
@@ -56,7 +56,7 @@ public final class Util
 	 * @return The hex representation of `num` as a two digit string
 	 * @throws IllegalArgumentException if `num` is not in the range `[0, 255]`
 	 */
-	public static final String hexByteFormat(int num)
+	public static String hexByteFormat(int num)
 	{
 		if (num < 0 || num > 255)
 		{
@@ -76,7 +76,7 @@ public final class Util
 	 * @param point The point to check
 	 * @return true if `point` is on-screen; otherwise false
 	 */
-	public static final boolean isOnScreen(Point point)
+	public static boolean isOnScreen(Point point)
 	{
 		return point.getX() >= MIN_X && point.getX() <= MAX_X &&
 			   point.getY() >= MIN_Y && point.getY() <= MAX_Y;
@@ -88,7 +88,7 @@ public final class Util
 	 * @param point The Point to be converted
 	 * @return The string representation of `point`
 	 */
-	public static final String pointToString(Point point)
+	public static String pointToString(Point point)
 	{
 		return "(" + point.getX() + ", " + point.getY() + ")";
 	}
@@ -100,7 +100,7 @@ public final class Util
 	 * @param upperBound The highest value that may be generated.
 	 * @return A random real number within the range [lowerBound, upperBound]
 	 */
-	public static final float randomFloatInRange(float lowerBound, float upperBound)
+	public static float randomFloatInRange(float lowerBound, float upperBound)
 	{
 		return (float) new Random().nextDouble() * (upperBound - lowerBound) + lowerBound;
 	}
@@ -112,7 +112,7 @@ public final class Util
 	 * @param upperBound The highest value that may be generated
 	 * @return A random whole number within the range [lowerBound, upperBound]
 	 */
-	public static final int randomIntInRange(int lowerBound, int upperBound)
+	public static int randomIntInRange(int lowerBound, int upperBound)
 	{
 		return new Random().nextInt(upperBound - lowerBound) + lowerBound;
 	}
@@ -125,7 +125,7 @@ public final class Util
 	 * 
 	 * @return A Point at a random location on the screen.
 	 */
-	public static final Point randomLocation()
+	public static Point randomLocation()
 	{
 		return new Point(randomFloatInRange(MIN_X, MAX_X), randomFloatInRange(MIN_Y, MAX_Y));
 	}

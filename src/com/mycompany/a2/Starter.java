@@ -20,13 +20,12 @@ import com.mycompany.a2.game.controller.Game;
 public class Starter {
 
     private Form current;
-    private Resources theme;
 
     public void init(Object context) {
         // use two network threads instead of one
         updateNetworkThreadCount(2);
 
-        theme = UIManager.initFirstTheme("/theme");
+        Resources theme = UIManager.initFirstTheme("/theme");
 
         // Enable Toolbar on all Forms by default
         Toolbar.setGlobalToolbar(true);
