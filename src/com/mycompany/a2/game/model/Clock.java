@@ -1,4 +1,4 @@
-package com.mycompany.a2.game;
+package com.mycompany.a2.game.model;
 
 /**
  * Represents in game time, i.e. the number of "clicks" that have occured.

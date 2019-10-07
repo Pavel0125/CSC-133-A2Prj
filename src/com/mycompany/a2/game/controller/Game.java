@@ -1,8 +1,9 @@
-package com.mycompany.a2.game;
+package com.mycompany.a2.game.controller;
 
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
+import com.mycompany.a2.game.model.GameWorld;
 
 /**
  * The game controller.

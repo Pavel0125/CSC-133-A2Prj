@@ -1,5 +1,7 @@
-package com.mycompany.a2.game;
+package com.mycompany.a2.game.model;
 
+import com.mycompany.a2.game.model.Color;
+import com.mycompany.a2.game.model.Fixed;
 import com.mycompany.a2.util.Util;
 
 /**

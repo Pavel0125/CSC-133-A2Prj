@@ -1,9 +1,10 @@
-package com.mycompany.a2.game;
+package com.mycompany.a2.game.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.codename1.charts.models.Point;
+import com.mycompany.a2.game.model.*;
 import com.mycompany.a2.util.Util;
 
 /**

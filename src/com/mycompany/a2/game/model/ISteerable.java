@@ -1,4 +1,4 @@
-package com.mycompany.a2.game;
+package com.mycompany.a2.game.model;
 
 public interface ISteerable
 {

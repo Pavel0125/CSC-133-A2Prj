@@ -1,4 +1,4 @@
-package com.mycompany.a2.game;
+package com.mycompany.a2.game.model;
 
 import com.codename1.charts.util.ColorUtil;
 import com.mycompany.a2.util.Util;

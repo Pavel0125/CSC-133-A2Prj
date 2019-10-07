@@ -1,6 +1,7 @@
-package com.mycompany.a2.game;
+package com.mycompany.a2.game.model;
 
 import com.codename1.charts.models.Point;
+import com.mycompany.a2.game.model.Color;
 import com.mycompany.a2.util.Util;
 
 /**
