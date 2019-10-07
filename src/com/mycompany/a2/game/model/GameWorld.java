@@ -2,14 +2,18 @@ package com.mycompany.a2.game.model;
 
 import com.codename1.charts.models.Point;
 import com.mycompany.a2.collection.IIterator;
+import com.mycompany.a2.game.view.MapView;
+import com.mycompany.a2.game.view.ScoreView;
 import com.mycompany.a2.util.Util;
+
+import java.util.Observable;
 
 /**
  * The game world model. This one class is in charge of basically everything. Because YAY OOP!
  * 
  * Maintains the entire state of the game world, and manages all user events.
  */
-public class GameWorld
+public class GameWorld extends Observable
 {
 	private static final int ANT_SPEED_INCREMENT = 1;
 	private static final int ANT_HEADING_INCREMENT = 5;
@@ -27,6 +31,8 @@ public class GameWorld
 	public GameWorld()
 	{
 		init();
+		addObserver(new MapView());
+		addObserver(new ScoreView());
 	}
 	
 	/**
@@ -253,11 +259,8 @@ public class GameWorld
 	 */
 	public void display()
 	{
-		System.out.println("Lives left: " + antLives +
-						   ", Elapsed time: " + clock.getTime() +
-						   ", Last flag reached: " + ant.getLastFlagReached() +
-						   ", Food level: " + ant.getFood() +
-						   ", Health: " + ant.getHealth());
+		setChanged();
+		notifyObservers(new Object[] { "ScoreView", ant, antLives, clock });
 	}
 	
 	/**
@@ -278,13 +281,7 @@ public class GameWorld
 	 */
 	public void showMap()
 	{
-		IIterator<GameObject> it = gameObjects.getIterator();
-
-		while (it.hasNext())
-		{
-			GameObject obj = it.getNext();
-
-			System.out.println(obj);
-		}
+		setChanged();
+		notifyObservers(new Object[] { "MapView", gameObjects.getIterator() });
 	}
 }
