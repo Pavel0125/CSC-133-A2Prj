@@ -30,14 +30,6 @@ public final class Flag extends Fixed
 	}
 	
 	/**
-	 * @return The flag's sequence number
-	 */
-	public int getSequenceNumber()
-	{
-		return sequenceNumber;
-	}
-	
-	/**
 	 * {@inheritDoc}
 	 * 
 	 * Calling `setColor()` on a Flag will do nothing.

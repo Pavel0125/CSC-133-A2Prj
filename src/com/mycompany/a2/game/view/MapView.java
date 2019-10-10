@@ -1,23 +1,24 @@
 package com.mycompany.a2.game.view;
 
-import com.mycompany.a2.collection.IIterator;
+import com.codename1.charts.util.ColorUtil;
+import com.codename1.ui.Container;
+import com.codename1.ui.plaf.Border;
+import com.mycompany.a2.game.model.GameWorld;
 
 import java.util.Observable;
 import java.util.Observer;
 
-public class MapView implements Observer
+public class MapView extends Container implements Observer
 {
+    public MapView()
+    {
+        getAllStyles().setBorder(Border.createLineBorder(2, ColorUtil.rgb(146, 0, 0)));
+    }
+
     @Override
     public void update(Observable o, Object arg)
     {
-        if (!(arg instanceof Object[])) throw new IllegalArgumentException();
-        Object[] objs = (Object[]) arg;
-        if (objs.length != 2 || objs[0] != "MapView") return;
-        if (!(objs[1] instanceof IIterator)) throw new IllegalArgumentException();
-        IIterator it = (IIterator) objs[1];
-        while (it.hasNext())
-        {
-            System.out.println(it.getNext());
-        }
+        if (!(o instanceof GameWorld)) throw new IllegalArgumentException();
+        ((GameWorld) o).showMap();
     }
 }

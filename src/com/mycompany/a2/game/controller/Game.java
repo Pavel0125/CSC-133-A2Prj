@@ -1,9 +1,14 @@
 package com.mycompany.a2.game.controller;
 
-import com.codename1.ui.Form;
-import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
+import com.codename1.ui.*;
+import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.FlowLayout;
+import com.mycompany.a2.game.controller.command.*;
 import com.mycompany.a2.game.model.GameWorld;
+import com.mycompany.a2.game.view.MapView;
+import com.mycompany.a2.game.view.ScoreView;
+import com.mycompany.a2.game.view.ui.Button;
 
 /**
  * The game controller.
@@ -12,89 +17,84 @@ import com.mycompany.a2.game.model.GameWorld;
  */
 public final class Game extends Form
 {
-	private GameWorld world = new GameWorld();
-	
 	/**
 	 * Create a game controller.
 	 * 
 	 * Starts the game immediately, and registers listeners for keyboard input.
 	 */
 	public Game()
-	{	
-		play();
-	}
-	
-	/**
-	 * Register listeners for keyboard input.
-	 */
-	private void play()
 	{
-		final TextField textField = new TextField();
-		
-		addComponent(new Label("Enter a command: "));
-		addComponent(textField);
-		
-		textField.addActionListener((event) ->
+		GameWorld world = new GameWorld();
+		setTitle("BugZ Game");
+		setLayout(new BorderLayout());
 		{
-			if (textField.getText().isEmpty()) return;
-			
-			char[] commands = textField.getText().toCharArray();
-			textField.clear();
-			
-			for (char command : commands)
+			Container leftMargin = new Container();
+			leftMargin.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
 			{
-				switch (command)
-				{
-				case 'x':
-					world.requestExit();
-					continue;
-				case 'y':
-					world.confirmExit();
-					continue;
-				case 'n':
-					world.cancelExit();
-					continue;
-				case 'a':
-					world.antAccelerate();
-					continue;
-				case 'b':
-					world.antBrake();
-					continue;
-				case 'l':
-					world.antTurnLeft();
-					continue;
-				case 'r':
-					world.antTurnRight();
-					continue;
-				case 'f':
-					world.antHitFoodStation();
-					continue;
-				case 'g':
-					world.antHitSpider();
-					continue;
-				case 't':
-					world.clockTick();
-					continue;
-				case 'd':
-					world.display();
-					continue;
-				case 'm':
-					world.showMap();
-					continue;
-				}
-				if (command >= '0' && command <= '9')
-				{
-					// Character.getNumericValue() is unavailable,
-					// so we subtract 48 to convert ascii to integer
-					world.antHitFlag(command - 48);
-					continue;
-				}
-				
-				// If we fall through to here, the user entered something else.
-				System.out.println("Invalid command '" + command + "'");
+				Button accelerateButton = new Button("Accelerate");
+				accelerateButton.getAllStyles().setMarginTop(100);
+				accelerateButton.addActionListener(new AntAccelerate(world));
+				leftMargin.addComponent(accelerateButton);
 			}
-		});
-		
+			{
+				Button leftButton = new Button("Left");
+				leftButton.addActionListener(new AntTurnLeft(world));
+				leftMargin.addComponent(leftButton);
+			}
+			addComponent(BorderLayout.WEST, leftMargin);
+		}
+		{
+			Container rightMargin = new Container();
+			rightMargin.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
+			{
+				Button brakeButton = new Button("Brake");
+				brakeButton.getAllStyles().setMarginTop(100);
+				brakeButton.addActionListener(new AntBrake(world));
+				rightMargin.addComponent(brakeButton);
+			}
+			{
+				Button rightButton = new Button("Right");
+				rightButton.addActionListener(new AntTurnRight(world));
+				rightMargin.addComponent(rightButton);
+			}
+			addComponent(BorderLayout.EAST, rightMargin);
+		}
+		{
+			Container bottomMargin = new Container();
+			bottomMargin.setLayout(new FlowLayout(Component.CENTER));
+			{
+				Button collideFlagButton = new Button("Collide with Flag");
+				collideFlagButton.addActionListener(new AntHitFlag(world));
+				bottomMargin.addComponent(collideFlagButton);
+			}
+			{
+				Button collideSpiderButton = new Button("Collide with Spider");
+				collideSpiderButton.addActionListener(new AntHitSpider(world));
+				bottomMargin.addComponent(collideSpiderButton);
+			}
+			{
+				Button collideFoodButton = new Button("Collide with Food");
+				collideFoodButton.addActionListener(new AntHitFoodStation(world));
+				bottomMargin.addComponent(collideFoodButton);
+			}
+			{
+				Button tickButton = new Button("Tick");
+				tickButton.addActionListener(new ClockTick(world));
+				bottomMargin.addComponent(tickButton);
+			}
+			addComponent(BorderLayout.SOUTH, bottomMargin);
+		}
+		{
+			ScoreView scoreView = new ScoreView();
+			addComponent(BorderLayout.NORTH, scoreView);
+			world.addObserver(scoreView);
+		}
+		{
+			MapView mapView = new MapView();
+			addComponent(BorderLayout.CENTER, mapView);
+			world.addObserver(mapView);
+		}
+		world.notifyObservers();
 		show();
 	}
 }

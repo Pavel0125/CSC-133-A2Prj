@@ -24,6 +24,7 @@ public class GameWorld extends Observable
 	private int antLives = ANT_STARTING_LIVES;
 	private GameObjectCollection gameObjects;
 	private Ant ant;
+	private boolean sound;
 	
 	/**
 	 * Constructs a game world, and starts the game.
@@ -31,8 +32,6 @@ public class GameWorld extends Observable
 	public GameWorld()
 	{
 		init();
-		addObserver(new MapView());
-		addObserver(new ScoreView());
 	}
 	
 	/**
@@ -59,7 +58,14 @@ public class GameWorld extends Observable
 		gameObjects.add(new FoodStation());
 		gameObjects.add(new FoodStation());
 	}
-	
+
+	@Override
+	public void notifyObservers()
+	{
+		setChanged();
+		super.notifyObservers(new GameWorldUpdateNotification(ant, antLives, clock, sound));
+	}
+
 	/**
 	 * Event: User requests that the ant go faster.
 	 * 
@@ -68,6 +74,7 @@ public class GameWorld extends Observable
 	public void antAccelerate()
 	{
 		ant.setSpeed(ant.getSpeed() + ANT_SPEED_INCREMENT);
+		notifyObservers();
 	}
 	
 	/**
@@ -78,6 +85,7 @@ public class GameWorld extends Observable
 	public void antBrake()
 	{
 		ant.setSpeed(ant.getSpeed() - ANT_SPEED_INCREMENT);
+		notifyObservers();
 	}
 	
 	/**
@@ -96,31 +104,26 @@ public class GameWorld extends Observable
 			System.out.println("Game over, you failed!");
 			System.exit(0);
 		}
-		
 		// Restart the level
 		init();
+		notifyObservers();
 	}
 	
 	/**
 	 * Event: Ant hits a flag.
 	 * 
-	 * If the flag index is exactly one greater than the last flag reached, increments last flag
-	 * reached.
-	 * 
-	 * @param flagIndex The index of the flag the ant hit
+	 * Ends the game if the last flag is reached.
 	 */
-	public void antHitFlag(int flagIndex)
+	public void antHitFlag()
 	{
-		if (flagIndex == ant.getLastFlagReached() + 1)
+		ant.hitNextFlag();
+
+		if (ant.getLastFlagReached() == 5)
 		{
-			ant.hitNextFlag();
-			
-			if (ant.getLastFlagReached() == 5)
-			{
-				System.out.println("Game over, you win! Total time: " + clock.getTime());
-				System.exit(0);
-			}
+			System.out.println("Game over, you win! Total time: " + clock.getTime());
+			System.exit(0);
 		}
+		notifyObservers();
 	}
 	
 	/**
@@ -142,6 +145,7 @@ public class GameWorld extends Observable
 				ant.setFood(ant.getFood() + ((FoodStation) obj).getCapacity());
 				((FoodStation) obj).setCapacity(0);
 				gameObjects.add(new FoodStation());
+				notifyObservers();
 				return;
 			}
 		}
@@ -160,9 +164,9 @@ public class GameWorld extends Observable
 		if (ant.getHealth() == 0)
 		{
 			System.out.println("The ant was beaten to death by the spider.");
-			
 			antDies();
 		}
+		notifyObservers();
 	}
 	
 	/**
@@ -173,6 +177,7 @@ public class GameWorld extends Observable
 	public void antTurnLeft()
 	{
 		ant.setHeading(ant.getHeading() - ANT_HEADING_INCREMENT);
+		notifyObservers();
 	}
 	
 	/**
@@ -183,6 +188,7 @@ public class GameWorld extends Observable
 	public void antTurnRight()
 	{
 		ant.setHeading(ant.getHeading() + ANT_HEADING_INCREMENT);
+		notifyObservers();
 	}
 	
 	/**
@@ -233,6 +239,7 @@ public class GameWorld extends Observable
 				((Movable) obj).move();
 			}
 		}
+		notifyObservers();
 	}
 	
 	/**
@@ -250,19 +257,7 @@ public class GameWorld extends Observable
 		}
 		System.out.println("Invalid command 'y'");
 	}
-	
-	/**
-	 * Event: User requests to see game information about the current game state.
-	 * 
-	 * Shows the number of lives left, elapsed time, the last flag reached, the ant's food level,
-	 * and the ant's health.
-	 */
-	public void display()
-	{
-		setChanged();
-		notifyObservers(new Object[] { "ScoreView", ant, antLives, clock });
-	}
-	
+
 	/**
 	 * Event: User requests to close the game.
 	 * 
@@ -281,7 +276,13 @@ public class GameWorld extends Observable
 	 */
 	public void showMap()
 	{
-		setChanged();
-		notifyObservers(new Object[] { "MapView", gameObjects.getIterator() });
+		IIterator<GameObject> it = gameObjects.getIterator();
+
+		while (it.hasNext())
+		{
+			GameObject obj = it.getNext();
+
+			System.out.println(obj);
+		}
 	}
 }

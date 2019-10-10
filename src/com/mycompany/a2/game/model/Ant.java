@@ -7,15 +7,13 @@ public final class Ant extends Movable implements ISteerable
 {
 	private static final int COLLISION_PENALTY = 5;
 	private static final int DEFAULT_SIZE = 15;
+	private static final int FOOD_CONSUMPTION_RATE = 2;
+	private static final int MAX_SPEED = 10;
 	private static final int STARTING_FOOD = 100;
 	private static final int STARTING_HEADING = 0;
 	private static final int STARTING_HEALTH = 10;
 	private static final int STARTING_SPEED = 5;
 	private static final Color DEFAULT_COLOR = Color.rgb(150, 0, 0);
-	
-	// For consistency, these should be named in all caps, but the spec says to name them as follows
-	private static final int foodConsumptionRate = 2;
-	private static final int maxSpeed = 10;
 	
 	private int foodLevel = STARTING_FOOD;
 	private int healthLevel = STARTING_HEALTH;
@@ -59,9 +57,9 @@ public final class Ant extends Movable implements ISteerable
 	{
 		float speedLimitModifier = ((float) 1 / STARTING_HEALTH) * healthLevel;
 		
-		speedLimit = Math.round(speedLimitModifier * maxSpeed);
+		speedLimit = Math.round(speedLimitModifier * MAX_SPEED);
 		
-		speedLimit = Math.min(speedLimit, maxSpeed);
+		speedLimit = Math.min(speedLimit, MAX_SPEED);
 	}
 
 	/**
@@ -77,7 +75,7 @@ public final class Ant extends Movable implements ISteerable
 	 */
 	public void consumeFood()
 	{
-		foodLevel -= foodConsumptionRate;
+		foodLevel -= FOOD_CONSUMPTION_RATE;
 		
 		foodLevel = Math.max(foodLevel, 0);
 	}
@@ -178,8 +176,8 @@ public final class Ant extends Movable implements ISteerable
 		return "Ant: "
 				+ super.toString()
 				+ ", speedLimit = " + speedLimit
-				+ ", maxSpeed = " + maxSpeed
+				+ ", maxSpeed = " + MAX_SPEED
 				+ ", health = " + healthLevel
-				+ ", foodConsumptionRate = " + foodConsumptionRate;
+				+ ", foodConsumptionRate = " + FOOD_CONSUMPTION_RATE;
 	}
 }
