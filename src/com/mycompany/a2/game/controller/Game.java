@@ -94,6 +94,13 @@ public final class Game extends Form
 			addComponent(BorderLayout.CENTER, mapView);
 			world.addObserver(mapView);
 		}
+		addKeyListener('a', new AntAccelerate(world));
+		addKeyListener('b', new AntBrake(world));
+		addKeyListener('l', new AntTurnLeft(world));
+		addKeyListener('r', new AntTurnRight(world));
+		addKeyListener('f', new AntHitFlag(world));
+		addKeyListener('g', new AntHitSpider(world));
+		addKeyListener('t', new ClockTick(world));
 		world.notifyObservers();
 		show();
 	}

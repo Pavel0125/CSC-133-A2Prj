@@ -28,7 +28,7 @@ public class GameWorld extends Observable
 	 */
 	public GameWorld()
 	{
-		init();
+		loadLevel();
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class GameWorld extends Observable
 	 * All game objects are deleted (if they exist) and recreated. This does not include the clock,
 	 * which is not considered a game object, and is not reset betwen games.
 	 */
-	public void init()
+	private void loadLevel()
 	{
 		ant = Ant.getInstance();
 		gameObjects = new GameObjectCollection();
@@ -102,7 +102,7 @@ public class GameWorld extends Observable
 			System.exit(0);
 		}
 		// Restart the level
-		init();
+		loadLevel();
 		notifyObservers();
 	}
 	
