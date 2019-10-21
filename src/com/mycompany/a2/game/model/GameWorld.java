@@ -2,8 +2,6 @@ package com.mycompany.a2.game.model;
 
 import com.codename1.charts.models.Point;
 import com.mycompany.a2.collection.IIterator;
-import com.mycompany.a2.game.view.MapView;
-import com.mycompany.a2.game.view.ScoreView;
 import com.mycompany.a2.util.Util;
 
 import java.util.Observable;
@@ -18,8 +16,7 @@ public class GameWorld extends Observable
 	private static final int ANT_SPEED_INCREMENT = 1;
 	private static final int ANT_HEADING_INCREMENT = 5;
 	private static final int ANT_STARTING_LIVES = 3;
-	
-	private boolean exitRequested = false;
+
 	private Clock clock = new Clock();
 	private int antLives = ANT_STARTING_LIVES;
 	private GameObjectCollection gameObjects;
@@ -192,25 +189,6 @@ public class GameWorld extends Observable
 	}
 	
 	/**
-	 * Event: User denies that they want to close the game.
-	 * 
-	 * If the game is in an "exit requested" state, changes to "exit not requested" state; if not,
-	 * prints an "invalid command" message.
-	 */
-	public void cancelExit()
-	{
-		if (exitRequested)
-		{
-			exitRequested = false;
-			System.out.println("Exit cancelled.");
-		}
-		else
-		{
-			System.out.println("Invalid command 'n'");
-		}
-	}
-	
-	/**
 	 * Event: The game moves forward in time by one time quantum.
 	 * 
 	 * Causes all moveable objects in the game world to move.
@@ -240,33 +218,6 @@ public class GameWorld extends Observable
 			}
 		}
 		notifyObservers();
-	}
-	
-	/**
-	 * Event: User confirms that they want to close the game.
-	 * 
-	 * If the game is in an "exit requested" state, quits the game; if not, prints an
-	 * "invalid command" message.
-	 */
-	public void confirmExit()
-	{
-		if (exitRequested)
-		{
-			System.out.println("Exit confirmed. Quitting...");
-			System.exit(0);
-		}
-		System.out.println("Invalid command 'y'");
-	}
-
-	/**
-	 * Event: User requests to close the game.
-	 * 
-	 * Does not cause a game exit, but puts the game in an "exit requested" state.
-	 */
-	public void requestExit()
-	{
-		exitRequested = true;
-		System.out.println("Are you sure you want to quit? [y | n]");
 	}
 	
 	/**
