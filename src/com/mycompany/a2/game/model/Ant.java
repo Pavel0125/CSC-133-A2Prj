@@ -20,7 +20,7 @@ public final class Ant extends Movable implements ISteerable
 	private int lastFlagReached;
 	private int speedLimit;
 
-	private static Ant instance = new Ant(Util.CENTER_SCREEN);
+	private static Ant instance = new Ant(Util.viewCenter());
 
 	private Ant(Point location)
 	{

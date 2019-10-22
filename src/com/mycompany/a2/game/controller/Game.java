@@ -12,6 +12,7 @@ import com.mycompany.a2.game.view.MapView;
 import com.mycompany.a2.game.view.ScoreView;
 import com.mycompany.a2.game.view.ui.Button;
 import com.mycompany.a2.game.view.ui.MenuButton;
+import com.mycompany.a2.util.Util;
 
 /**
  * The game controller.
@@ -91,11 +92,9 @@ public final class Game extends Form
 			addComponent(BorderLayout.NORTH, scoreView);
 			world.addObserver(scoreView);
 		}
-		{
-			MapView mapView = new MapView();
-			addComponent(BorderLayout.CENTER, mapView);
-			world.addObserver(mapView);
-		}
+		MapView mapView = new MapView();
+		addComponent(BorderLayout.CENTER, mapView);
+		world.addObserver(mapView);
 		{
 			Toolbar toolbar = new Toolbar();
 			setToolbar(toolbar);
@@ -129,7 +128,10 @@ public final class Game extends Form
 		addKeyListener('f', AntHitFlag.getInstance(world));
 		addKeyListener('g', AntHitSpider.getInstance(world));
 		addKeyListener('t', ClockTick.getInstance(world));
-		world.notifyObservers();
 		show();
+		Util.viewWidth = mapView.getWidth();
+		Util.viewHeight = mapView.getHeight();
+		world.loadLevel();
+		world.notifyObservers();
 	}
 }

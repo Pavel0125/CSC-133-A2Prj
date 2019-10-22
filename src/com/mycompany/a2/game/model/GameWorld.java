@@ -24,25 +24,17 @@ public class GameWorld extends Observable
 	private boolean sound;
 	
 	/**
-	 * Constructs a game world, and starts the game.
-	 */
-	public GameWorld()
-	{
-		loadLevel();
-	}
-	
-	/**
 	 * Starts or restarts the game.
 	 * 
 	 * All game objects are deleted (if they exist) and recreated. This does not include the clock,
 	 * which is not considered a game object, and is not reset betwen games.
 	 */
-	private void loadLevel()
+	public void loadLevel()
 	{
 		ant = Ant.getInstance();
 		gameObjects = new GameObjectCollection();
 		gameObjects.add(ant);
-		gameObjects.add(new Flag(1, Util.CENTER_SCREEN));
+		gameObjects.add(new Flag(1, Util.viewCenter()));
 		gameObjects.add(new Flag(2, new Point(350, 25)));
 		gameObjects.add(new Flag(3, new Point(850, 120)));
 		gameObjects.add(new Flag(4, new Point(700, 600)));

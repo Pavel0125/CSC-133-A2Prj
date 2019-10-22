@@ -12,12 +12,14 @@ import com.codename1.charts.models.Point;
  */
 public final class Util
 {
-	public static final float MIN_X = 0;
-	public static final float MIN_Y = 0;
-	public static final float MAX_X = 1024;
-	public static final float MAX_Y = 768;
-	public static final Point CENTER_SCREEN = new Point((MIN_X + MAX_X) / 2, (MIN_Y + MAX_Y) / 2);
-	
+	public static float viewWidth;
+	public static float viewHeight;
+
+	public static Point viewCenter()
+	{
+		return new Point(viewWidth / 2, viewHeight / 2);
+	}
+
 	/**
 	 * Ensure that a number falls within a specific range. If not, bring it in range.
 	 * 
@@ -28,7 +30,7 @@ public final class Util
 	 * @param max The minimim value of the range
 	 * @return Either `num`, `min` or `max`, depending on their values, as specified above.
 	 */
-	public static final float clampToRange(float num, float min, float max)
+	public static float clampToRange(float num, float min, float max)
 	{
 		num = Math.max(num, min);
 		return Math.min(num, max);
@@ -42,8 +44,8 @@ public final class Util
 	 */
 	public static Point clampToScreen(Point point)
 	{
-		float x = Util.clampToRange(point.getX(), MIN_X, MAX_X);
-		float y = Util.clampToRange(point.getY(), MIN_Y, MAX_Y);
+		float x = Util.clampToRange(point.getX(), 0, viewWidth);
+		float y = Util.clampToRange(point.getY(), 0, viewHeight);
 		return new Point(x, y);
 	}
 	
@@ -78,8 +80,8 @@ public final class Util
 	 */
 	public static boolean isOnScreen(Point point)
 	{
-		return point.getX() >= MIN_X && point.getX() <= MAX_X &&
-			   point.getY() >= MIN_Y && point.getY() <= MAX_Y;
+		return point.getX() >= 0 && point.getX() <= viewWidth &&
+			   point.getY() >= 0 && point.getY() <= viewHeight;
 	}
 	
 	/**
@@ -127,6 +129,6 @@ public final class Util
 	 */
 	public static Point randomLocation()
 	{
-		return new Point(randomFloatInRange(MIN_X, MAX_X), randomFloatInRange(MIN_Y, MAX_Y));
+		return new Point(randomFloatInRange(0, viewWidth), randomFloatInRange(0, viewHeight));
 	}
 }

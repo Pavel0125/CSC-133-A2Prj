@@ -13,10 +13,6 @@ public abstract class GameObject
 {
 	protected static final int MAX_SIZE = 50;
 	protected static final int MIN_SIZE = 10;
-	protected static final float MIN_X = Util.MIN_X;
-	protected static final float MIN_Y = Util.MIN_Y;
-	protected static final float MAX_X = Util.MAX_X;
-	protected static final float MAX_Y = Util.MAX_Y;
 
 	/**
 	 * The color of the object
@@ -82,24 +78,7 @@ public abstract class GameObject
 	 */
 	public void setLocation(Point location)
 	{
-		this.location = location;
-		
-		if (location.getX() < MIN_X)
-		{
-			location.setX(MIN_X);
-		}
-		if (location.getY() < MIN_Y)
-		{
-			location.setY(MIN_Y);
-		}
-		if (location.getX() > MAX_X)
-		{
-			location.setX(MAX_X);
-		}
-		if (location.getY() > MAX_Y)
-		{
-			location.setY(MAX_Y);
-		}
+		this.location = Util.clampToScreen(location);
 	}
 	
 	/**
