@@ -236,4 +236,15 @@ public class GameWorld extends Observable
 			System.out.println(obj);
 		}
 	}
+
+	/**
+	 * Event: User requests to toggle sound ON or OFF.
+	 *
+	 * Toggles sound ON or OFF.
+	 */
+	public void toggleSound()
+	{
+		sound = !sound;
+		notifyObservers();
+	}
 }

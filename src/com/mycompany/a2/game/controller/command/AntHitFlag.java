@@ -10,7 +10,7 @@ public class AntHitFlag extends Command
 
     public AntHitFlag(GameWorld world)
     {
-        super("AntHitFlag");
+        super("Hit Flag");
         this.world = world;
     }
 

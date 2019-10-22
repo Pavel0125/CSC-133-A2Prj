@@ -2,21 +2,17 @@ package com.mycompany.a2.game.controller.command;
 
 import com.codename1.ui.Command;
 import com.codename1.ui.events.ActionEvent;
-import com.mycompany.a2.game.model.GameWorld;
 
-public class AntDie extends Command
+public class Exit extends Command
 {
-    GameWorld world;
-
-    public AntDie(GameWorld world)
+    public Exit()
     {
-        super("Die");
-        this.world = world;
+        super("Exit");
     }
 
     @Override
     public void actionPerformed(ActionEvent evt)
     {
-        world.antDies();
+        System.exit(0);
     }
 }

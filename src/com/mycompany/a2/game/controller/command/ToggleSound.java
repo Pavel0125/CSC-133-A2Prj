@@ -4,19 +4,19 @@ import com.codename1.ui.Command;
 import com.codename1.ui.events.ActionEvent;
 import com.mycompany.a2.game.model.GameWorld;
 
-public class AntAccelerate extends Command
+public class ToggleSound extends Command
 {
-    GameWorld world;
+    private GameWorld world;
 
-    public AntAccelerate(GameWorld world)
+    public ToggleSound(GameWorld world)
     {
-        super("Accelerate");
+        super("Toggle Sound");
         this.world = world;
     }
 
     @Override
     public void actionPerformed(ActionEvent evt)
     {
-        world.antAccelerate();
+        world.toggleSound();
     }
 }

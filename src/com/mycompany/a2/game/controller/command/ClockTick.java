@@ -10,7 +10,7 @@ public class ClockTick extends Command
 
     public ClockTick(GameWorld world)
     {
-        super("ClockTick");
+        super("Clock Tick");
         this.world = world;
     }
 

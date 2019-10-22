@@ -10,7 +10,7 @@ public class AntHitFoodStation extends Command
 
     public AntHitFoodStation(GameWorld world)
     {
-        super("AntHitFoodStation");
+        super("Hit Food Station");
         this.world = world;
     }
 

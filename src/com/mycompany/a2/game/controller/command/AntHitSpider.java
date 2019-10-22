@@ -10,7 +10,7 @@ public class AntHitSpider extends Command
 
     public AntHitSpider(GameWorld world)
     {
-        super("AntHitSpider");
+        super("Hit Spider");
         this.world = world;
     }
 

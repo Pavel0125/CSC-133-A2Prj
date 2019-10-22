@@ -1,6 +1,8 @@
 package com.mycompany.a2.game.controller;
 
 import com.codename1.ui.*;
+import com.codename1.ui.Component;
+import com.codename1.ui.Container;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -9,6 +11,7 @@ import com.mycompany.a2.game.model.GameWorld;
 import com.mycompany.a2.game.view.MapView;
 import com.mycompany.a2.game.view.ScoreView;
 import com.mycompany.a2.game.view.ui.Button;
+import com.mycompany.a2.game.view.ui.MenuButton;
 
 /**
  * The game controller.
@@ -25,7 +28,6 @@ public final class Game extends Form
 	public Game()
 	{
 		GameWorld world = new GameWorld();
-		setTitle("BugZ Game");
 		setLayout(new BorderLayout());
 		{
 			Container leftMargin = new Container();
@@ -93,6 +95,32 @@ public final class Game extends Form
 			MapView mapView = new MapView();
 			addComponent(BorderLayout.CENTER, mapView);
 			world.addObserver(mapView);
+		}
+		{
+			Toolbar toolbar = new Toolbar();
+			setToolbar(toolbar);
+			{
+				MenuButton accelerateButton = new MenuButton("Accelerate");
+				accelerateButton.addActionListener(new AntAccelerate(world));
+				toolbar.addComponentToSideMenu(accelerateButton);
+			}
+			{
+				MenuButton exitButton = new MenuButton("Exit");
+				exitButton.addActionListener(new ShowExitDialog());
+				toolbar.addComponentToSideMenu(exitButton);
+			}
+			{
+				MenuButton toggleSoundButton = new MenuButton("Toggle Sound");
+				toggleSoundButton.addActionListener(new ToggleSound(world));
+				toolbar.addComponentToSideMenu(toggleSoundButton);
+			}
+			{
+				MenuButton aboutButton = new MenuButton("About");
+				aboutButton.addActionListener(new ShowAboutDialog());
+				toolbar.addComponentToSideMenu(aboutButton);
+			}
+			toolbar.addCommandToRightBar(new ShowHelpDialog());
+			setTitle("BugZ Game");
 		}
 		addKeyListener('a', new AntAccelerate(world));
 		addKeyListener('b', new AntBrake(world));

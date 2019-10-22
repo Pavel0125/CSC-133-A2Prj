@@ -10,7 +10,7 @@ public class AntBrake extends Command
 
     public AntBrake(GameWorld world)
     {
-        super("AntBrakeCommand");
+        super("Brake");
         this.world = world;
     }
 

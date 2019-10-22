@@ -10,7 +10,7 @@ public class AntTurnLeft extends Command
 
     public AntTurnLeft(GameWorld world)
     {
-        super("AntTurnLeft");
+        super("Turn Left");
         this.world = world;
     }
 
