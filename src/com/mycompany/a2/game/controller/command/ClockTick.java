@@ -6,12 +6,18 @@ import com.mycompany.a2.game.model.GameWorld;
 
 public class ClockTick extends Command
 {
-    GameWorld world;
+    private GameWorld world;
+    private static ClockTick instance;
 
-    public ClockTick(GameWorld world)
+    private ClockTick(GameWorld world)
     {
         super("Clock Tick");
         this.world = world;
+    }
+
+    public static ClockTick getInstance(GameWorld world)
+    {
+        return instance == null ? instance = new ClockTick(world) : instance;
     }
 
     @Override

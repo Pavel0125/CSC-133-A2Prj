@@ -4,8 +4,15 @@ import com.codename1.ui.Command;
 
 public class Cancel extends Command
 {
-    public Cancel()
+    private static Cancel instance;
+
+    private Cancel()
     {
         super("Cancel");
+    }
+
+    public static Cancel getInstance()
+    {
+        return instance == null ? instance = new Cancel() : instance;
     }
 }

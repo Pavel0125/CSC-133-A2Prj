@@ -35,12 +35,12 @@ public final class Game extends Form
 			{
 				Button accelerateButton = new Button("Accelerate");
 				accelerateButton.getAllStyles().setMarginTop(100);
-				accelerateButton.addActionListener(new AntAccelerate(world));
+				accelerateButton.addActionListener(AntAccelerate.getInstance(world));
 				leftMargin.addComponent(accelerateButton);
 			}
 			{
 				Button leftButton = new Button("Left");
-				leftButton.addActionListener(new AntTurnLeft(world));
+				leftButton.addActionListener(AntTurnLeft.getInstance(world));
 				leftMargin.addComponent(leftButton);
 			}
 			addComponent(BorderLayout.WEST, leftMargin);
@@ -51,12 +51,12 @@ public final class Game extends Form
 			{
 				Button brakeButton = new Button("Brake");
 				brakeButton.getAllStyles().setMarginTop(100);
-				brakeButton.addActionListener(new AntBrake(world));
+				brakeButton.addActionListener(AntBrake.getInstance(world));
 				rightMargin.addComponent(brakeButton);
 			}
 			{
 				Button rightButton = new Button("Right");
-				rightButton.addActionListener(new AntTurnRight(world));
+				rightButton.addActionListener(AntTurnRight.getInstance(world));
 				rightMargin.addComponent(rightButton);
 			}
 			addComponent(BorderLayout.EAST, rightMargin);
@@ -66,22 +66,22 @@ public final class Game extends Form
 			bottomMargin.setLayout(new FlowLayout(Component.CENTER));
 			{
 				Button collideFlagButton = new Button("Collide with Flag");
-				collideFlagButton.addActionListener(new AntHitFlag(world));
+				collideFlagButton.addActionListener(AntHitFlag.getInstance(world));
 				bottomMargin.addComponent(collideFlagButton);
 			}
 			{
 				Button collideSpiderButton = new Button("Collide with Spider");
-				collideSpiderButton.addActionListener(new AntHitSpider(world));
+				collideSpiderButton.addActionListener(AntHitSpider.getInstance(world));
 				bottomMargin.addComponent(collideSpiderButton);
 			}
 			{
 				Button collideFoodButton = new Button("Collide with Food");
-				collideFoodButton.addActionListener(new AntHitFoodStation(world));
+				collideFoodButton.addActionListener(AntHitFoodStation.getInstance(world));
 				bottomMargin.addComponent(collideFoodButton);
 			}
 			{
 				Button tickButton = new Button("Tick");
-				tickButton.addActionListener(new ClockTick(world));
+				tickButton.addActionListener(ClockTick.getInstance(world));
 				bottomMargin.addComponent(tickButton);
 			}
 			addComponent(BorderLayout.SOUTH, bottomMargin);
@@ -101,34 +101,34 @@ public final class Game extends Form
 			setToolbar(toolbar);
 			{
 				MenuButton accelerateButton = new MenuButton("Accelerate");
-				accelerateButton.addActionListener(new AntAccelerate(world));
+				accelerateButton.addActionListener(AntAccelerate.getInstance(world));
 				toolbar.addComponentToSideMenu(accelerateButton);
 			}
 			{
 				MenuButton exitButton = new MenuButton("Exit");
-				exitButton.addActionListener(new ShowExitDialog());
+				exitButton.addActionListener(ShowExitDialog.getInstance());
 				toolbar.addComponentToSideMenu(exitButton);
 			}
 			{
 				MenuButton toggleSoundButton = new MenuButton("Toggle Sound");
-				toggleSoundButton.addActionListener(new ToggleSound(world));
+				toggleSoundButton.addActionListener(ToggleSound.getInstance(world));
 				toolbar.addComponentToSideMenu(toggleSoundButton);
 			}
 			{
 				MenuButton aboutButton = new MenuButton("About");
-				aboutButton.addActionListener(new ShowAboutDialog());
+				aboutButton.addActionListener(ShowAboutDialog.getInstance());
 				toolbar.addComponentToSideMenu(aboutButton);
 			}
-			toolbar.addCommandToRightBar(new ShowHelpDialog());
+			toolbar.addCommandToRightBar(ShowHelpDialog.getInstance());
 			setTitle("BugZ Game");
 		}
-		addKeyListener('a', new AntAccelerate(world));
-		addKeyListener('b', new AntBrake(world));
-		addKeyListener('l', new AntTurnLeft(world));
-		addKeyListener('r', new AntTurnRight(world));
-		addKeyListener('f', new AntHitFlag(world));
-		addKeyListener('g', new AntHitSpider(world));
-		addKeyListener('t', new ClockTick(world));
+		addKeyListener('a', AntAccelerate.getInstance(world));
+		addKeyListener('b', AntBrake.getInstance(world));
+		addKeyListener('l', AntTurnLeft.getInstance(world));
+		addKeyListener('r', AntTurnRight.getInstance(world));
+		addKeyListener('f', AntHitFlag.getInstance(world));
+		addKeyListener('g', AntHitSpider.getInstance(world));
+		addKeyListener('t', ClockTick.getInstance(world));
 		world.notifyObservers();
 		show();
 	}

@@ -6,12 +6,18 @@ import com.mycompany.a2.game.model.GameWorld;
 
 public class AntBrake extends Command
 {
-    GameWorld world;
+    private GameWorld world;
+    private static AntBrake instance;
 
-    public AntBrake(GameWorld world)
+    private AntBrake(GameWorld world)
     {
         super("Brake");
         this.world = world;
+    }
+
+    public static AntBrake getInstance(GameWorld world)
+    {
+        return instance == null ? instance = new AntBrake(world) : instance;
     }
 
     @Override

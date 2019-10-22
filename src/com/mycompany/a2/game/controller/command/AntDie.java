@@ -6,12 +6,18 @@ import com.mycompany.a2.game.model.GameWorld;
 
 public class AntDie extends Command
 {
-    GameWorld world;
+    private GameWorld world;
+    private static AntDie instance;
 
-    public AntDie(GameWorld world)
+    private AntDie(GameWorld world)
     {
         super("Die");
         this.world = world;
+    }
+
+    public static AntDie getInstance(GameWorld world)
+    {
+        return instance == null ? instance = new AntDie(world) : instance;
     }
 
     @Override

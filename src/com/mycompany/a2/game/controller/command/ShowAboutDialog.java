@@ -6,9 +6,16 @@ import com.codename1.ui.events.ActionEvent;
 
 public class ShowAboutDialog extends Command
 {
-    public ShowAboutDialog()
+    private static ShowAboutDialog instance;
+
+    private ShowAboutDialog()
     {
         super("Show About Dialog");
+    }
+
+    public static ShowAboutDialog getInstance()
+    {
+        return instance == null ? instance = new ShowAboutDialog() : instance;
     }
 
     @Override

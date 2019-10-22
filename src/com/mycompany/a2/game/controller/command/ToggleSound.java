@@ -7,11 +7,17 @@ import com.mycompany.a2.game.model.GameWorld;
 public class ToggleSound extends Command
 {
     private GameWorld world;
+    private static ToggleSound instance;
 
-    public ToggleSound(GameWorld world)
+    private ToggleSound(GameWorld world)
     {
         super("Toggle Sound");
         this.world = world;
+    }
+
+    public static ToggleSound getInstance(GameWorld world)
+    {
+        return instance == null ? instance = new ToggleSound(world) : instance;
     }
 
     @Override

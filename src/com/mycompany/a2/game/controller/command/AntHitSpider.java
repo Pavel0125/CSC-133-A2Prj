@@ -6,12 +6,18 @@ import com.mycompany.a2.game.model.GameWorld;
 
 public class AntHitSpider extends Command
 {
-    GameWorld world;
+    private GameWorld world;
+    private static AntHitSpider instance;
 
-    public AntHitSpider(GameWorld world)
+    private AntHitSpider(GameWorld world)
     {
         super("Hit Spider");
         this.world = world;
+    }
+
+    public static AntHitSpider getInstance(GameWorld world)
+    {
+        return instance == null ? instance = new AntHitSpider(world) : instance;
     }
 
     @Override

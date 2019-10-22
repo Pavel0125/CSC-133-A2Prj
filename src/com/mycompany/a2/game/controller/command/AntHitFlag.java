@@ -6,12 +6,18 @@ import com.mycompany.a2.game.model.GameWorld;
 
 public class AntHitFlag extends Command
 {
-    GameWorld world;
+    private GameWorld world;
+    private static AntHitFlag instance;
 
-    public AntHitFlag(GameWorld world)
+    private AntHitFlag(GameWorld world)
     {
         super("Hit Flag");
         this.world = world;
+    }
+
+    public static AntHitFlag getInstance(GameWorld world)
+    {
+        return instance == null ? instance = new AntHitFlag(world) : instance;
     }
 
     @Override

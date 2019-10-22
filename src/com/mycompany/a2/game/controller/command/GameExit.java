@@ -5,9 +5,16 @@ import com.codename1.ui.events.ActionEvent;
 
 public class GameExit extends Command
 {
-    public GameExit()
+    private static GameExit instance;
+
+    private GameExit()
     {
         super("Exit");
+    }
+
+    public static GameExit getInstance()
+    {
+        return instance == null ? instance = new GameExit() : instance;
     }
 
     @Override

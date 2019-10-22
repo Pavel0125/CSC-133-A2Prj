@@ -6,12 +6,18 @@ import com.mycompany.a2.game.model.GameWorld;
 
 public class AntAccelerate extends Command
 {
-    GameWorld world;
+    private GameWorld world;
+    private static AntAccelerate instance;
 
-    public AntAccelerate(GameWorld world)
+    private AntAccelerate(GameWorld world)
     {
         super("Accelerate");
         this.world = world;
+    }
+
+    public static AntAccelerate getInstance(GameWorld world)
+    {
+        return instance == null ? instance = new AntAccelerate(world) : instance;
     }
 
     @Override

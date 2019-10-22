@@ -6,9 +6,16 @@ import com.codename1.ui.events.ActionEvent;
 
 public class ShowHelpDialog extends Command
 {
-    public ShowHelpDialog()
+    private static ShowHelpDialog instance;
+
+    private ShowHelpDialog()
     {
         super("Help");
+    }
+
+    public static ShowHelpDialog getInstance()
+    {
+        return instance == null ? instance = new ShowHelpDialog() : instance;
     }
 
     @Override
